@@ -260,7 +260,6 @@ class heart(Module):
         
         req_skip_heart = QuestBattleApiSkipQuestBattleRequest()
         req_skip_heart.isArchiveEvent = False
-        req_skip_heart.partyDataId = max(party_data_list, key=lambda p: p.partyPower).partyDataId
         req_skip_heart.questStageMstId = rec.questStageMstId
         req_skip_heart.repeatNum = remaining
         await client.request(req_skip_heart)
@@ -322,4 +321,5 @@ class present(Module):
         req_receive.presentDataIds = [p.presentDataId for p in present.presentDataList]
         await client.request(req_receive)
         self._log(f"收集了{cnt}个礼物")
+
         
