@@ -164,7 +164,6 @@ import random
 @default(False)
 @texttype('start_raid_damage_min', '伤害下限', '900000')
 @texttype('start_raid_damage_max', '伤害上限', '1100000')
-@texttype('start_raid_id', '关卡id', '120')
 @texttype('start_raid_party', '队伍名/id', '30')
 @texttype('start_raid_result', '战斗结果(1:win, 2:lose, 3:timeout)', '3')
 @booltype('start_raid_receive', '如果上一奖励未领取导致无法发车，则自动领取', True)
@@ -176,7 +175,6 @@ class self_raid(RaidLPModule):
     async def do_task(self, client: pcrclient):
         await super().do_task(client)
 
-        raid_id = int(self.get_config('start_raid_id'))
         raid_damage = random.randint(
             int(self.get_config('start_raid_damage_min')),
             int(self.get_config('start_raid_damage_max'))
@@ -204,7 +202,8 @@ class self_raid(RaidLPModule):
             self._log(f"当前没有开放的团战")
             return
         
-        raid_id = raid_id % 100
+        raid_id = min(20, 1 + self.raid_top.multiRaidUserSeasonData.clearedDifficulty)
+
         raid_id += opening_raid.seasonId * 100
         
         record = next(

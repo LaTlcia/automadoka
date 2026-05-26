@@ -13,6 +13,98 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa, utils
 import base64
 import json
 
+import secrets
+import math
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives import serialization
+
+
+def is_probable_prime(n, rounds=40):
+    if n < 2:
+        return False
+
+    small_primes = [
+        2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
+        31, 37, 41, 43, 47
+    ]
+
+    for p in small_primes:
+        if n == p:
+            return True
+        if n % p == 0:
+            return False
+
+    # n - 1 = d * 2^s
+    d = n - 1
+    s = 0
+    while d % 2 == 0:
+        s += 1
+        d //= 2
+
+    for _ in range(rounds):
+        a = secrets.randbelow(n - 3) + 2
+        x = pow(a, d, n)
+
+        if x == 1 or x == n - 1:
+            continue
+
+        for _ in range(s - 1):
+            x = pow(x, 2, n)
+            if x == n - 1:
+                break
+        else:
+            return False
+
+    return True
+
+
+def generate_prime(bits):
+    while True:
+        x = secrets.randbits(bits)
+        x |= 1
+        x |= 1 << (bits - 1)
+
+        if is_probable_prime(x):
+            return x
+
+
+def generate_512bit_rsa_key():
+    e = 65537
+
+    while True:
+        p = generate_prime(256)
+        q = generate_prime(256)
+
+        if p == q:
+            continue
+
+        n = p * q
+
+        # 确保 modulus 正好是 512 bit
+        if n.bit_length() != 512:
+            continue
+
+        phi = (p - 1) * (q - 1)
+
+        if math.gcd(e, phi) != 1:
+            continue
+
+        d = pow(e, -1, phi)
+
+        private_numbers = rsa.RSAPrivateNumbers(
+            p=p,
+            q=q,
+            d=d,
+            dmp1=d % (p - 1),
+            dmq1=d % (q - 1),
+            iqmp=pow(q, -1, p),
+            public_numbers=rsa.RSAPublicNumbers(
+                e=e,
+                n=n,
+            ),
+        )
+
+        return private_numbers.private_key()
 
 # —— PEM 导出扩展 —— #
 def export_subject_public_key_info_pem(key: rsa.RSAPrivateKey) -> str:
@@ -122,7 +214,7 @@ class GreeClient:
                 await self.post("/auth/authorize")
 
     async def register(self):
-        key = rsa.generate_private_key(public_exponent=65537, key_size=512)
+        key = generate_512bit_rsa_key()
         priv_bytes = key.private_bytes(
             serialization.Encoding.DER,
             serialization.PrivateFormat.PKCS8,
