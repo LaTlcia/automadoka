@@ -9,6 +9,7 @@ from requests import HTTPError
 from typing import Type
 from .greeclient import GreeClient, JpGreeClient, UsGreeClient
 from ..core.crypto import PKLB_HASH_KEY, SONET_HASH_KEY
+import hashlib
 
 from ..core import crypto
 
@@ -23,7 +24,9 @@ class sdkclientbase(sdkclient):
     def cacheFile(self):
         if not re.match('^[A-Za-z0-9]{16}$', self._account.username):
             raise RuntimeError('引继码格式不正确')
-        return os.path.join(os.path.join(CACHE_DIR, 'token'), self._account.username + '.json')
+        md5 = hashlib.md5(self._account.password.encode('utf8')).hexdigest()
+        filename = self._account.username + '_' + md5
+        return os.path.join(os.path.join(CACHE_DIR, 'token'), filename + '.json')
 
     async def register(self, password: str):
         gclient = self.clientType()
@@ -180,9 +183,11 @@ class sonetsdkclient(sdkclient):
 
     @property
     def cacheFile(self):
-        if not re.match('^[A-Za-z0-9]{10}$', self._account.username):
+        if not re.match('^[A-Za-z0-9]{16}$', self._account.username):
             raise RuntimeError('引继码格式不正确')
-        return os.path.join(os.path.join(CACHE_DIR, 'token'), self._account.username + '.json')
+        md5 = hashlib.md5(self._account.password.encode('utf8')).hexdigest()
+        filename = self._account.username + '_' + md5
+        return os.path.join(os.path.join(CACHE_DIR, 'token'), filename + '.json')
 
     async def register(self, password: str):
         gclient = SonetClient()
