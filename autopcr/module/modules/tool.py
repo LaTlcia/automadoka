@@ -10,7 +10,7 @@ from ...constants import USER_TZ as user_tz
 
 @name('快速刷图')
 @default(False)
-@inttype('force_battle_repeat_times', '重复次数', 1, [i for i in range(1, 100)])
+@inttype('force_battle_repeat_times', '重复次数', 1, [i for i in range(1, 1000)])
 @texttype('force_battle_quest_id', '关卡ID', '411105')
 @texttype('force_battle_team', '队伍ID/名称', '20')
 @inttype('force_battle_auto_mode', '自动模式', 0, [0, 1, 2])
