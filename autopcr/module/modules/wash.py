@@ -115,6 +115,7 @@ class super_wash(Module):
             raise AbortError(f"没有找到角色 {style_id} 的数据")
         
         lock_str = getattr(selection_ability_data, 'subSelectionLocks' + str(selection_index))
+        mst_id = getattr(selection_ability_data, 'mainSelectionAbilityMstId' + str(selection_index))
 
         if lock_str:
             permanent_lockIds_list = [int(x) for x in lock_str.split(',')]
@@ -130,6 +131,7 @@ class super_wash(Module):
                 req.selectionAbilityNum = selection_index
                 req.lockIds = []
                 req.permanentLockIds = permanent_lockIds_list
+                req.selectionAbilityMstId = mst_id
 
                 res = await client.request(req)
 
