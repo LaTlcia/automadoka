@@ -16,6 +16,9 @@ from ..util import type_utils
 from .version import update_version
 from abc import abstractmethod
 
+class VersionUpdatedException(Exception):
+    pass
+
 class ApiException(Exception):
 
     def __init__(self, message, status, result_code):
@@ -101,9 +104,7 @@ class apiclient(Container["apiclient"]):
 
             if resp.status_code == 428:
                 await update_version()
-                request.prepare()
-                if hasattr(request, 'appVersion'):
-                    request.appVersion = version_info.version # dirty work
+                raise VersionUpdatedException()
 
             if resp.status_code == 401:
                 raise ApiException("Unauthorized: Session may have expired.", status="Unauthorized", result_code=401)

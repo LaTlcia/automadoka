@@ -1,5 +1,5 @@
 from .base import Component, RequestHandler
-from .apiclient import apiclient, ApiException
+from .apiclient import VersionUpdatedException, apiclient, ApiException
 from .sdkclient import sdkclient
 import os
 from ..model.models import *
@@ -96,6 +96,8 @@ class sessionmgr(Component[apiclient]):
                 self._logged = True
                 
                 break
+            except VersionUpdatedException:
+                continue
             except ApiException as e:
                 raise
 

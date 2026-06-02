@@ -528,3 +528,21 @@ class battle_mission(Module):
                         result=1
                     ))
                     self._log(f"完成战斗点 {p.fieldPointMstId} ({s.stratumName}-{p.name})")
+
+@description('扫荡最高已通关难度的总力战')
+@name('扫荡总力战')
+@default(True)
+class solo_raid(Module):
+    async def do_task(self, client: pcrclient):
+        solo_raid_mst = await db.mst(MstApiGetSoloRaidMstListRequest())
+        now = datetime.now().astimezone()
+        if all(datetime.fromisoformat(x.battleEndTime) < now or datetime.fromisoformat(x.startTime) > now for x in solo_raid_mst):
+            raise SkipError("当前没有总力战活动")
+        solo_raid_top = await client.request(SoloRaidApiGetTopRequest())
+        max_times = client.data.config.soloRaidConfig.maxPlayCountPerDay - solo_raid_top.soloRaidUserData.todayPlayCount
+        if max_times <= 0:
+            raise SkipError("总力战没有剩余次数")
+        
+        await client.request(SoloRaidApiSkipQuestBattleRequest(repeatNum=max_times))
+
+        self._log(f"扫荡了{max_times}次总力战")

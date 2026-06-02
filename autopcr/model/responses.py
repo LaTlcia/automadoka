@@ -380,8 +380,8 @@ class SoloRaidApiGetTopResponse(ResponseBase):
     isClosedStageByTimeout: bool = None
 class SoloRaidApiInitializeStageResponse(ResponseBase):
     initializeStatus: int = None
-    soloRaidStageData: SoloRaidSoloRaidStageDataRecord = None
     soloRaidRoomData: SoloRaidSoloRaidRoomDataRecord = None
+    soloRaidStageData: SoloRaidSoloRaidStageDataRecord = None
     soloRaidUserData: SoloRaidSoloRaidUserDataRecord = None
     userQuestStageData: QuestOutGameUserQuestStageDataRecord = None
     partyDataList: List[PartyPartyDataRecord] = None
