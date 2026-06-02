@@ -534,6 +534,7 @@ class SkillSkillDetailMstRecord(BaseModel):
     role: int = None
     range: int = None
     probability: int = None
+    isFixedProbability: bool = None
     description: str = None
     descriptionType: int = None
     startConditionSetIdCsv: str = None
@@ -557,6 +558,7 @@ class ExplorationFieldSeriesMstRecord(BaseModel):
     endTime: str = None
     sortOrder: int = None
     advMstId: int = None
+    backgroundResourcePath: str = None
 class ExplorationFieldStageMstRecord(BaseModel):
     fieldStageMstId: int = None
     fieldSeriesMstId: int = None
@@ -643,6 +645,8 @@ class SkillPassiveSkillDetailMstRecord(BaseModel):
     remainCount: int = None
     role: int = None
     range: int = None
+    probability: int = None
+    isFixedProbability: bool = None
     description: str = None
     descriptionType: int = None
     startTimingIdCsv: str = None
@@ -1114,6 +1118,7 @@ class StoryEventStoryEventMstRecord(BaseModel):
     description: str = None
     soundMstId: int = None
     resourceName: str = None
+    isCollectionOnlyReread: bool = None
 class StoryEventStoryEventQuestStageMstRecord(BaseModel):
     questStageMstId: int = None
     eventItemNum: int = None
@@ -1184,6 +1189,7 @@ class DungeonDungeonRoomMstRecord(BaseModel):
     presetEvent5: int = None
     levelResourceName: str = None
     backgroundResourceName: str = None
+    backgroundResourcePath: str = None
 class DungeonDungeonEventMstRecord(BaseModel):
     dungeonEventMstId: int = None
     dungeonRoomMstId: int = None
@@ -1213,6 +1219,7 @@ class ExplorationFieldPointMstRecord(BaseModel):
     pointType: int = None
     pointValue1: int = None
     pointValue2: int = None
+    pointValue3: int = None
     displayType: int = None
     isHidden: bool = None
     firstClearRewardGroupId: int = None
@@ -1224,6 +1231,8 @@ class ExplorationFieldPointMstRecord(BaseModel):
     pointPositionX: int = None
     pointPositionY: int = None
     pointRotation: int = None
+    homeAppealMstId: int = None
+    firstSkipType: int = None
 class ExplorationBossDirectionMstRecord(BaseModel):
     bossDirectionMstId: int = None
     resourceName: str = None
@@ -1445,6 +1454,7 @@ class DollhouseStyleLive2dCostumeMstRecord(BaseModel):
     cheekParam: int = None
     defaultOption: str = None
     releaseTime: str = None
+    type: int = None
 class DollhouseStyleLive2dCostumeGroupMstRecord(BaseModel):
     styleLive2dCostumeGroupMstId: int = None
     styleMstId: int = None
@@ -1457,6 +1467,7 @@ class DollhouseCameraPoseMstRecord(BaseModel):
     sortOrder: int = None
     animation: str = None
     face: str = None
+    reactionResourceName: str = None
 class InvitationInvitationCampaignMstRecord(BaseModel):
     invitationCampaignMstId: int = None
     name: str = None
@@ -1546,6 +1557,7 @@ class LotteryLotteryMstRecord(BaseModel):
     name: str = None
     backgroundImagePath: str = None
     iconImagePath: str = None
+    ticketItemMstId: int = None
     startTime: str = None
     lotteryReceivableEndTime: str = None
     rewardReceivableStartTime: str = None
@@ -1814,6 +1826,7 @@ class ExplorationFieldStageUserDataRecord(BaseModel):
     openFieldPointMstIdCsv: str = None
     isClear: bool = None
     firstBattleFieldStratumMstIdCsv: str = None
+    nextCloseFieldPointMstId: int = None
 class CharacterCharacterLevelUpInfo(BaseModel):
     characterMstId: int = None
     styleMstId: int = None
@@ -1865,6 +1878,79 @@ class ExplorationBattleQuestMissionInfo(BaseModel):
     questMissionMstId: int = None
     currentBattleCount: int = None
     isFirstClearCurrentBattle: bool = None
+class StyleRentalRentalCharacterBuildSummary(BaseModel):
+    styleMstId: int = None
+    characterMstId: int = None
+    level: int = None
+    limitBreakCount: int = None
+    power: int = None
+class SelectionAbilitySelectionAbilityInfo(BaseModel):
+    mainSelectionAbilityMstId: int = None
+    subSelectionAbilityMstId1: int = None
+    subSelectionAbilityMstId2: int = None
+    subSelectionAbilityMstId3: int = None
+    subSelectionLockType1: SelectionAbilityLockType = None
+    subSelectionLockType2: SelectionAbilityLockType = None
+    subSelectionLockType3: SelectionAbilityLockType = None
+class SelectionAbilitySelectionAbilityDataRecord(BaseModel):
+    styleMstId: int = None
+    userId: int = None
+    mainSelectionAbilityMstId1: int = None
+    mainSelectionAbilityMstId2: int = None
+    mainSelectionAbilityMstId3: int = None
+    mainSelectionAbilityMstId4: int = None
+    mainSelectionAbilityMstId5: int = None
+    mainSelectionAbilityMstId2Enabled: bool = None
+    mainSelectionAbilityMstId3Enabled: bool = None
+    mainSelectionAbilityMstId4Enabled: bool = None
+    mainSelectionAbilityMstId5Enabled: bool = None
+    subSelectionAbilityMstIds1: str = None
+    subSelectionLocks1: str = None
+    subSelectionTempLocksReserved1: str = None
+    subSelectionAbilityMstIds2: str = None
+    subSelectionLocks2: str = None
+    subSelectionTempLocksReserved2: str = None
+    subSelectionAbilityMstIds3: str = None
+    subSelectionLocks3: str = None
+    subSelectionTempLocksReserved3: str = None
+    subSelectionAbilityMstIds4: str = None
+    subSelectionLocks4: str = None
+    subSelectionTempLocksReserved4: str = None
+    subSelectionAbilityMstIds5: str = None
+    subSelectionLocks5: str = None
+    subSelectionTempLocksReserved5: str = None
+    stockSelectionAbilityMstIds: str = None
+    hasSelectionAbilityInfoList: List[SelectionAbilitySelectionAbilityInfo] = None
+    updatedTime: str = None
+class StyleRentalRentalCharacterBuildDetail(BaseModel):
+    styleData: StyleStyleDataRecord = None
+    characterData: CharacterCharacterDataRecord = None
+    selectionAbilityData: SelectionAbilitySelectionAbilityDataRecord = None
+class StyleRentalStyleRentalBorrowingDataRecord(BaseModel):
+    userId: int = None
+    contentId: StyleRentalContentId = None
+    partyDataId: int = None
+    borrowedUserId: int = None
+    role: StyleRentalRole = None
+    rentalCharacterBuildDetail: StyleRentalRentalCharacterBuildDetail = None
+    cardMstId: int = None
+    subStyleMstId: int = None
+    isActive: bool = None
+class StyleRentalBorrowedUserInfo(BaseModel):
+    userId: int = None
+    name: str = None
+    level: int = None
+    favoriteStyleMstId: int = None
+    maxPartyPower: int = None
+    recentLoginTime: str = None
+class StyleRentalStyleRentalInfo(BaseModel):
+    role: StyleRentalRole = None
+    styleMstId: int = None
+    power: int = None
+class StyleRentalStyleRentalBattleFinalizeInfo(BaseModel):
+    borrowedUserInfo: StyleRentalBorrowedUserInfo = None
+    friendType: FriendFriendType = None
+    borrowedUserStyleRentalInfoList: List[StyleRentalStyleRentalInfo] = None
 class ExplorationBattleStageInfo(BaseModel):
     questDataId: int = None
     questStageMstId: int = None
@@ -1919,35 +2005,6 @@ class QuestBattleBattleUnit(BaseModel):
     passiveSkillInfoList: List[QuestBattlePassiveSkillInfo] = None
     leaderSkillInfo: QuestBattleLeaderSkillInfo = None
     talismanParamInfoList: List[QuestBattleTalismanParamInfo] = None
-class SelectionAbilitySelectionAbilityDataRecord(BaseModel):
-    styleMstId: int = None
-    userId: int = None
-    mainSelectionAbilityMstId1: int = None
-    mainSelectionAbilityMstId2: int = None
-    mainSelectionAbilityMstId3: int = None
-    mainSelectionAbilityMstId4: int = None
-    mainSelectionAbilityMstId5: int = None
-    mainSelectionAbilityMstId2Enabled: bool = None
-    mainSelectionAbilityMstId3Enabled: bool = None
-    mainSelectionAbilityMstId4Enabled: bool = None
-    mainSelectionAbilityMstId5Enabled: bool = None
-    subSelectionAbilityMstIds1: str = None
-    subSelectionLocks1: str = None
-    subSelectionTempLocksReserved1: str = None
-    subSelectionAbilityMstIds2: str = None
-    subSelectionLocks2: str = None
-    subSelectionTempLocksReserved2: str = None
-    subSelectionAbilityMstIds3: str = None
-    subSelectionLocks3: str = None
-    subSelectionTempLocksReserved3: str = None
-    subSelectionAbilityMstIds4: str = None
-    subSelectionLocks4: str = None
-    subSelectionTempLocksReserved4: str = None
-    subSelectionAbilityMstIds5: str = None
-    subSelectionLocks5: str = None
-    subSelectionTempLocksReserved5: str = None
-    stockSelectionAbilityMstIds: str = None
-    updatedTime: str = None
 class PartyCharacterBuildDetail(BaseModel):
     styleData: StyleStyleDataRecord = None
     characterData: CharacterCharacterDataRecord = None
@@ -2069,6 +2126,7 @@ class SoloRaidUsedStyleInfo(BaseModel):
     usedStyleMstId3: int = None
     usedStyleMstId4: int = None
     usedStyleMstId5: int = None
+    rentedStyleMstId: int = None
     damage: int = None
 class SoloRaidSoloRaidStageDataRecord(BaseModel):
     soloRaidStageDataId: int = None
@@ -2181,6 +2239,10 @@ class ShopShopTimeSaleCountDataRecord(BaseModel):
     shopPaymentDetailMstId: int = None
     purchaseCount: int = None
     endTime: str = None
+class SelectionAbilitySelectionAbilityFavoriteDataRecord(BaseModel):
+    userId: int = None
+    selectionAbilityMstIds: List[int] = None
+    isFavoriteEx: bool = None
 class SelectionAbilitySelectionAbilityConversionItemData(BaseModel):
     styleMstId: int = None
     selectionAbilityMstId: int = None
@@ -2300,19 +2362,6 @@ class PartyCharacterBuildDataRecord(BaseModel):
     styleMstId: int = None
     cardMstId: int = None
     subStyleMstIds: str = None
-class StyleRentalRentalCharacterBuildDetail(BaseModel):
-    styleData: StyleStyleDataRecord = None
-    characterData: CharacterCharacterDataRecord = None
-    selectionAbilityData: SelectionAbilitySelectionAbilityDataRecord = None
-class StyleRentalStyleRentalBorrowingDataRecord(BaseModel):
-    userId: int = None
-    contentId: StyleRentalContentId = None
-    partyDataId: int = None
-    borrowedUserId: int = None
-    rentalCharacterBuildDetail: StyleRentalRentalCharacterBuildDetail = None
-    cardMstId: int = None
-    subStyleMstId: int = None
-    isActive: bool = None
 class UserUserProfileDataRecord(BaseModel):
     userId: int = None
     comment: str = None
@@ -2423,10 +2472,6 @@ class StyleRentalStyleRentalCandidateInfo(BaseModel):
     recentLoginTime: str = None
     isNowRentingStyle: bool = None
     styleRentalData: StyleRentalStyleRentalDataRecord = None
-class StyleRentalStyleRentalInfo(BaseModel):
-    role: StyleRentalRole = None
-    styleMstId: int = None
-    power: int = None
 class StyleRentalStyleRentalForSetInfo(BaseModel):
     role: StyleRentalRole = None
     styleMstId: int = None
@@ -2610,8 +2655,11 @@ class HomeHomeViewData(BaseModel):
     soloRaidResultInfo: SoloRaidSoloRaidResultRecord = None
     enableNewSoloRaidBadge: bool = None
     enablePlaySoloRaidBadge: bool = None
-    soloRaidRemainingPlayCount: int = None
     enableAlternativeStoryBadge: bool = None
+class LoginBonusIndividualLoginBonusDataRecord(BaseModel):
+    userId: int = None
+    loginBonusMstId: int = None
+    conditionInfo: str = None
 class HomeLoginBonusRecord(BaseModel):
     userId: int = None
     loginBonusMstId: int = None
@@ -2619,6 +2667,7 @@ class HomeLoginBonusRecord(BaseModel):
     dayCount: int = None
     dayTotalCount: int = None
     lastRewardDate: str = None
+    individualLoginBonusData: LoginBonusIndividualLoginBonusDataRecord = None
 class UserComebackUserDataRecord(BaseModel):
     userId: int = None
     comebackCount: int = None
@@ -2923,6 +2972,7 @@ class FriendFriendInfo(BaseModel):
     friendCode: str = None
     type: int = None
     targetUserParamData: UserUserParamDataRecord = None
+    styleRentalDataList: List[StyleRentalStyleRentalDataRecord] = None
 class QuestOutGameUserQuestTrainingDataRecord(BaseModel):
     userId: int = None
     questGroupMstId: int = None
@@ -3133,11 +3183,18 @@ class QuestOutGameDropNumSubscriptionRateInfo(BaseModel):
     premium: int = None
 class QuestOutGameDropNumRateInfo(BaseModel):
     subscription: QuestOutGameDropNumSubscriptionRateInfo = None
+class QuestOutGameInBattleScenarioInfo(BaseModel):
+    targetQuestStageMstId: int = None
+    startRound: int = None
+    advMstId: int = None
+    moviePath: str = None
+    battleFailedText: str = None
 class QuestOutGameQuestConfig(BaseModel):
     backGroundPlayAddLapTimeSeconds: int = None
     characterHeartDailyBattleClearLimit: int = None
     dropNumUpRate: QuestOutGameDropNumRateInfo = None
     validDailySkipSpecialAttackDirectionTime: str = None
+    inBattleScenarioInfoList: List[QuestOutGameInBattleScenarioInfo] = None
 class TutorialTutorialStepRecord(BaseModel):
     name: str = None
     value: int = None
@@ -3215,6 +3272,8 @@ class PartySubStyleDataParamRate(BaseModel):
     rate: int = None
 class PartyPartyConfig(BaseModel):
     partyNumMax: int = None
+    partyNumMaxPreset: int = None
+    presetReleaseTime: str = None
     nameLengthMax: int = None
     defaultSoloPartyName: str = None
     defaultBattlePartyName: str = None
@@ -3315,6 +3374,7 @@ class SelectionAbilitySelectionAbilityConfig(BaseModel):
     maxUseSelectionAbilityMultiLotteryItemNum: int = None
     canUseSelectionAbilityMultiLotteryItemDifficulty: int = None
     selectionAbilityMultiLotteryItemReleaseTime: str = None
+    swapSystemReleaseTime: str = None
 class MultiRaidMultiRaidConfig(BaseModel):
     maxJoinRoomCount: int = None
     maxJoinUserCount: int = None
@@ -3341,13 +3401,17 @@ class CameraCameraConfig(BaseModel):
     bebeStyle3dCharacterMstId: int = None
     bebeBackgroundColor: str = None
     namaeStyle3dCharacterMstId: int = None
+    namaeStyleLive2dCostumeMstId: int = None
     namaeBackgroundColor: str = None
     yodakaStyle3dCharacterMstId: int = None
+    yodakaStyleLive2dCostumeMstId: int = None
     yodakaBackgroundColor: str = None
     aqStyle3dCharacterMstId: int = None
+    aqStyleLive2dCostumeMstId: int = None
     aqBackgroundColor: str = None
 class DollhouseDollhouseConfig(BaseModel):
     dollhouseStartTime: str = None
+    addRegularCharacterStartTime: str = None
 class ShopShopConfig(BaseModel):
     timeSaleLimitHours: int = None
 class LotteryLotteryConfig(BaseModel):
@@ -3412,6 +3476,9 @@ class ChatChatRoomInfo(BaseModel):
 class PartySavePartyBuffReqParam(BaseModel):
     partyDataId: int = None
     soloRaidPartyBuffMstId: int = None
+class PartySortPresetPartyReqParam(BaseModel):
+    partyDataId: int = None
+    partyIndex: int = None
 class CharacterCharacterHeartLevelUpInfo(BaseModel):
     characterMstId: int = None
     beforeHeartLevel: int = None

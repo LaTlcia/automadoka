@@ -143,6 +143,9 @@ class ExplorationBattleApiFinalizeStageForUserV4Response(ResponseBase):
     userQuestMissionDataList: List[QuestOutGameUserQuestMissionDataRecord] = None
     questMissionInfoList: List[ExplorationBattleQuestMissionInfo] = None
     isUserExpStoredMessage: bool = None
+    rentalCharacterBuildSummary: StyleRentalRentalCharacterBuildSummary = None
+    styleRentalBorrowingData: StyleRentalStyleRentalBorrowingDataRecord = None
+    styleRentalBattleFinalizeInfo: StyleRentalStyleRentalBattleFinalizeInfo = None
 class ExplorationBattleApiGetExplorationInfoResponse(ResponseBase):
     stageInfo: ExplorationBattleStageInfo = None
     allyBattleUnitList: List[QuestBattleBattleUnit] = None
@@ -268,6 +271,9 @@ class SoloRaidApiFinalizeStageForUserResponse(ResponseBase):
     afterSoloRaidUserData: SoloRaidSoloRaidUserDataRecord = None
     objectDataRecord: ObjectObjectDataRecord = None
     userQuestStageData: QuestOutGameUserQuestStageDataRecord = None
+    rentalCharacterBuildSummary: StyleRentalRentalCharacterBuildSummary = None
+    styleRentalBorrowingData: StyleRentalStyleRentalBorrowingDataRecord = None
+    styleRentalBattleFinalizeInfo: StyleRentalStyleRentalBattleFinalizeInfo = None
 class SoloRaidApiGetPlayingCharacterBuildDetailResponse(ResponseBase):
     characterBuildDetailList1: List[PartyCharacterBuildDetail] = None
     characterBuildDetailList2: List[PartyCharacterBuildDetail] = None
@@ -371,6 +377,7 @@ class SoloRaidApiGetTopResponse(ResponseBase):
     maxPartyPower: int = None
     scoreInfo: SoloRaidScoreInfo = None
     soloRaidPartyBuffDataList: List[SoloRaidSoloRaidPartyBuffDataRecord] = None
+    isClosedStageByTimeout: bool = None
 class SoloRaidApiInitializeStageResponse(ResponseBase):
     initializeStatus: int = None
     soloRaidStageData: SoloRaidSoloRaidStageDataRecord = None
@@ -416,6 +423,7 @@ class ShopApiIsBuyTimeSaleShopResponse(ResponseBase):
     result: bool = None
 class SelectionAbilityApiGetSelectionAbilityDataListResponse(ResponseBase):
     selectionAbilityDataList: List[SelectionAbilitySelectionAbilityDataRecord] = None
+    selectionAbilityFavoriteData: SelectionAbilitySelectionAbilityFavoriteDataRecord = None
 class SelectionAbilityApiDeleteSelectionAbilityResponse(ResponseBase):
     selectionAbilityData: SelectionAbilitySelectionAbilityDataRecord = None
     itemDataList: List[ItemItemDataRecord] = None
@@ -439,6 +447,8 @@ class SelectionAbilityApiLearnMainSelectionAbilityUseItemResponse(ResponseBase):
     itemDataList: List[ItemItemDataRecord] = None
     learnSelectionAbilityMstIds: List[int] = None
     selectionAbilityConversionItemDataList: List[SelectionAbilitySelectionAbilityConversionItemData] = None
+class SelectionAbilityApiSetFavoriteMainAbilityResponse(ResponseBase):
+    selectionAbilityFavoriteData: SelectionAbilitySelectionAbilityFavoriteDataRecord = None
 class ScoreAttackApiGetScoreAttackTopResponse(ResponseBase):
     selfRanking: int = None
     userScoreAttackData: ScoreAttackUserScoreAttackDataRecord = None
@@ -662,12 +672,16 @@ class StyleRentalApiGetMyListResponse(ResponseBase):
     styleRentalInfoList: List[StyleRentalStyleRentalInfo] = None
 class StyleRentalApiSaveBorrowingStyleResponse(ResponseBase):
     styleRentalBorrowingData: StyleRentalStyleRentalBorrowingDataRecord = None
+class StyleRentalApiSetActiveResponse(ResponseBase):
+    styleRentalBorrowingData: StyleRentalStyleRentalBorrowingDataRecord = None
 class StyleRentalApiSaveMyCardResponse(ResponseBase):
     styleRentalBorrowingData: StyleRentalStyleRentalBorrowingDataRecord = None
 class StyleRentalApiSaveMySubStyleResponse(ResponseBase):
     styleRentalBorrowingData: StyleRentalStyleRentalBorrowingDataRecord = None
 class StyleRentalApiSetMyStyleResponse(ResponseBase):
     styleRentalInfoList: List[StyleRentalStyleRentalInfo] = None
+class StyleRentalApiResetBorrowingStyleResponse(ResponseBase):
+    styleRentalBorrowingData: StyleRentalStyleRentalBorrowingDataRecord = None
 class MultiRaidApiGetTopResponse(ResponseBase):
     multiRaidUserData: MultiRaidMultiRaidUserDataRecord = None
     multiRaidUserSeasonData: MultiRaidMultiRaidUserSeasonDataRecord = None
@@ -1108,6 +1122,8 @@ class GachaApiUpdateAlreadyViewResponse(ResponseBase):
     newBadgeGachaSeriesMstIdList: List[int] = None
 class GachaApiGetGachaGemTextListResponse(ResponseBase):
     gachaGemTextInfoList: List[GachaGachaGemTextInfo] = None
+class GachaApiGetGachaObjectIdListResponse(ResponseBase):
+    objectIdList: List[int] = None
 class FriendApiGetTopResponse(ResponseBase):
     ownFriendCode: str = None
 class FriendApiGetFollowListResponse(ResponseBase):
@@ -1288,6 +1304,8 @@ class PartyApiSavePartySubStyleResponse(ResponseBase):
     userParamData: UserUserParamDataRecord = None
 class PartyApiSaveSoloRaidPartyBuffResponse(ResponseBase):
     soloRaidPartyBuffDataList: List[SoloRaidSoloRaidPartyBuffDataRecord] = None
+class PartyApiSortPresetPartyResponse(ResponseBase):
+    partyDataList: List[PartyPartyDataRecord] = None
 class CharacterApiGetCharacterListResponse(ResponseBase):
     characterDataList: List[CharacterCharacterDataRecord] = None
 class CharacterApiCharacterAwakeResponse(ResponseBase):
@@ -1447,6 +1465,8 @@ class ExplorationApiGetTopInfoV4Response(ResponseBase):
     fieldStageUserData: ExplorationFieldStageUserDataRecord = None
     collectionDataList: List[CollectionCollectionDataRecord] = None
     forceFirstEntryFieldPointMstId: int = None
+    miniTutorialData: TutorialMiniTutorialDataRecord = None
+    userQuestStageDataList: List[QuestOutGameUserQuestStageDataRecord] = None
 class ExplorationApiGetFieldStageUserDataListResponse(ResponseBase):
     fieldStageUserDataList: List[ExplorationFieldStageUserDataRecord] = None
 class ExplorationApiReachFieldPointResponse(ResponseBase):
@@ -1463,6 +1483,7 @@ class ExplorationApiDungeonGoalResponse(ResponseBase):
     fieldStageCollectionInfo: CollectionFieldStageCollectionInfo = None
     partyDataList: List[PartyPartyDataRecord] = None
     miniTutorialData: TutorialMiniTutorialDataRecord = None
+    styleRentalBorrowingData: StyleRentalStyleRentalBorrowingDataRecord = None
 class ExplorationApiSkipFieldPointResponse(ResponseBase):
     dungeonResult: ExplorationDungeonResult = None
     battleResult: ExplorationBattleExplorationBattleResult = None

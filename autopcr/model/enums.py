@@ -97,6 +97,24 @@ class QuestBattleResult(IntEnum):
     Retire = 4
     Skip = 5
 
+class StyleRentalContentId(IntEnum):
+    Exploration = 1
+    SoloRaid = 2
+
+class StyleRentalRole(IntEnum):
+    All = 0
+    Attacker = 1
+    Breaker = 2
+    Healer = 3
+    Buffer = 4
+    Debuffer = 5
+    Defender = 6
+
+class SelectionAbilityLockType(IntEnum):
+    None_ = 0
+    Temporary = 1
+    Permanent = 2
+
 class SoloRaidRoomResult(IntEnum):
     Init = -1
     None_ = 0
@@ -117,19 +135,6 @@ class SoloRaidStageResult(IntEnum):
     Playing = 0
     Win = 1
     Lose = 2
-
-class StyleRentalContentId(IntEnum):
-    Exploration = 1
-    SoloRaid = 2
-
-class StyleRentalRole(IntEnum):
-    All = 0
-    Attacker = 1
-    Breaker = 2
-    Healer = 3
-    Buffer = 4
-    Debuffer = 5
-    Defender = 6
 
 class MultiRaidRoomResult(IntEnum):
     Init = -1

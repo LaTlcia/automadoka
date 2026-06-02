@@ -1102,7 +1102,6 @@ class SoloRaidApiRetireRequest(RequestBase[SoloRaidApiRetireResponse]):
     def url(self) -> str:
         return "/api/solo_raid/retire"
 class SoloRaidApiSkipQuestBattleRequest(RequestBase[SoloRaidApiSkipQuestBattleResponse]):
-    soloRaidStageMstId: int = None
     repeatNum: int = None
     @property
     def url(self) -> str:
@@ -1149,6 +1148,7 @@ class SelectionAbilityApiLearnSubSelectionAbilityRequest(RequestBase[SelectionAb
     selectionAbilityNum: int = None
     lockIds: List[int] = None
     permanentLockIds: List[int] = None
+    selectionAbilityMstId: int = None
     @property
     def url(self) -> str:
         return "/api/selection_ability/learn_sub_selection_ability"
@@ -1173,6 +1173,12 @@ class SelectionAbilityApiLearnMainSelectionAbilityUseItemRequest(RequestBase[Sel
     @property
     def url(self) -> str:
         return "/api/selection_ability/learn_main_selection_ability_use_item"
+class SelectionAbilityApiSetFavoriteMainAbilityRequest(RequestBase[SelectionAbilityApiSetFavoriteMainAbilityResponse]):
+    selectionAbilityMstIdList: List[int] = None
+    isFavoriteEx: bool = None
+    @property
+    def url(self) -> str:
+        return "/api/selection_ability/set_favorite_main_ability"
 class ScoreAttackApiGetScoreAttackTopRequest(RequestBase[ScoreAttackApiGetScoreAttackTopResponse]):
     scoreAttackMstId: int = None
     @property
@@ -1464,6 +1470,13 @@ class StyleRentalApiSaveBorrowingStyleRequest(RequestBase[StyleRentalApiSaveBorr
     @property
     def url(self) -> str:
         return "/api/style_rental/save_borrowing_style"
+class StyleRentalApiSetActiveRequest(RequestBase[StyleRentalApiSetActiveResponse]):
+    contentId: StyleRentalContentId = None
+    partyDataId: int = None
+    isActive: bool = None
+    @property
+    def url(self) -> str:
+        return "/api/style_rental/set_active"
 class StyleRentalApiSaveMyCardRequest(RequestBase[StyleRentalApiSaveMyCardResponse]):
     contentId: StyleRentalContentId = None
     cardMstId: int = None
@@ -1481,6 +1494,11 @@ class StyleRentalApiSetMyStyleRequest(RequestBase[StyleRentalApiSetMyStyleRespon
     @property
     def url(self) -> str:
         return "/api/style_rental/set_my_style"
+class StyleRentalApiResetBorrowingStyleRequest(RequestBase[StyleRentalApiResetBorrowingStyleResponse]):
+    contentId: StyleRentalContentId = None
+    @property
+    def url(self) -> str:
+        return "/api/style_rental/reset_borrowing_style"
 class MultiRaidApiGetTopRequest(RequestBase[MultiRaidApiGetTopResponse]):
     @property
     def url(self) -> str:
@@ -1980,6 +1998,10 @@ class GachaApiGetGachaGemTextListRequest(RequestBase[GachaApiGetGachaGemTextList
     @property
     def url(self) -> str:
         return "/api/gacha/get_gacha_gem_text_list"
+class GachaApiGetGachaObjectIdListRequest(RequestBase[GachaApiGetGachaObjectIdListResponse]):
+    @property
+    def url(self) -> str:
+        return "/api/gacha/get_gacha_object_id_list"
 class FriendApiGetTopRequest(RequestBase[FriendApiGetTopResponse]):
     @property
     def url(self) -> str:
@@ -2237,6 +2259,7 @@ class PartyApiSavePartyForRecommendRequest(RequestBase[PartyApiSavePartyForRecom
     styleMstId5: int = None
     cardMstId5: int = None
     subStyleMstIds5: List[int] = None
+    name: str = None
     @property
     def url(self) -> str:
         return "/api/party/save_party_for_recommend"
@@ -2247,6 +2270,8 @@ class PartyApiGetRecommendPartyDataRequest(RequestBase[PartyApiGetRecommendParty
     isSettingSubStyle: bool = None
     sameCharacterInParty: bool = None
     isEnableStyleForSoloRaid: bool = None
+    styleRentalDefineContentId: StyleRentalContentId = None
+    partyDataId: int = None
     @property
     def url(self) -> str:
         return "/api/party/get_recommend_party_data"
@@ -2288,6 +2313,11 @@ class PartyApiSaveSoloRaidPartyBuffRequest(RequestBase[PartyApiSaveSoloRaidParty
     @property
     def url(self) -> str:
         return "/api/party/save_solo_raid_party_buff"
+class PartyApiSortPresetPartyRequest(RequestBase[PartyApiSortPresetPartyResponse]):
+    sortPresetPartyList: List[PartySortPresetPartyReqParam] = None
+    @property
+    def url(self) -> str:
+        return "/api/party/sort_preset_party"
 class CharacterApiGetCharacterListRequest(RequestBase[CharacterApiGetCharacterListResponse]):
     @property
     def url(self) -> str:
@@ -2423,6 +2453,7 @@ class AlternativeStoryApiReadAdvRequest(RequestBase[AlternativeStoryApiReadAdvRe
         return "/api/alternative_story/read_adv"
 class ExplorationApiGetTopInfoV4Request(RequestBase[ExplorationApiGetTopInfoV4Response]):
     fieldStageMstId: int = None
+    questGroupMstId: int = None
     @property
     def url(self) -> str:
         return "/api/exploration/get_top_info_v4"
