@@ -1,7 +1,7 @@
 from dataclasses import field
 from typing import Any
 from .cron import cron1, cron2, cron3, cron4, cron5, cron6
-from .sweep import arena, battle_mission, event, archive, solo_raid, tower, heart, gather, mission, present
+from .sweep import arena, battle_mission, event, archive, high_score, solo_raid, tower, heart, gather, mission, present
 from .stamina import stamina_buy, basic 
 from .shop import event_shop, raid_shop, arena_shop
 from .common import loginbonus, info
@@ -44,6 +44,7 @@ daily_modules = ModuleList(
         support_raid,
         like_raid,
         solo_raid,
+        high_score,
         arena,
         basic,
         event,

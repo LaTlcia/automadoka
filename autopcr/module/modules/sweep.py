@@ -1,9 +1,10 @@
+﻿from datetime import datetime, timedelta, timezone
+import asyncio
+
 from ..modulebase import *
 from ..config import *
 from ...core.pcrclient import pcrclient
 from ...model.models import *
-from datetime import datetime, timedelta, timezone
-import asyncio
 
 @description('自动扫荡当前已通关活动')
 @name('扫荡活动')
@@ -546,3 +547,26 @@ class solo_raid(Module):
         await client.request(SoloRaidApiSkipQuestBattleRequest(repeatNum=max_times))
 
         self._log(f"扫荡了{max_times}次总力战")
+
+@description('扫荡打分')
+@name('扫荡打分')
+@default(True)
+class high_score(Module):
+    async def do_task(self, client: pcrclient):
+        now = datetime.now().astimezone()
+
+        for high_score_mst in await db.mst(MstApiGetScoreAttackMstListRequest()):
+            if datetime.fromisoformat(high_score_mst.endTime) < now or datetime.fromisoformat(high_score_mst.startTime) > now:
+                continue
+        
+            high_score_top = await client.request(ScoreAttackApiGetScoreAttackTopRequest(scoreAttackMstId=high_score_mst.scoreAttackMstId))
+            max_times = client.data.config.scoreAttackConfig.resetScoreAttackSkipNum - high_score_top.userScoreAttackData.skipNum
+            if max_times <= 0:
+                raise SkipError(f"{high_score_mst.name}打分没有剩余次数")
+            
+            await client.request(ScoreAttackApiSkipQuestBattleRequest(
+                scoreAttackMstId=high_score_mst.scoreAttackMstId,
+                repeatNum=max_times
+            ))
+
+            self._log(f"扫荡了{max_times}次打分{high_score_mst.name}")
