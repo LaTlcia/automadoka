@@ -128,7 +128,7 @@ class super_wash(Module):
             try:
                 req = SelectionAbilityApiLearnSubSelectionAbilityRequest()
                 req.styleMstId = style_id
-                req.selectionAbilityNum = selection_index
+                req.selectionAbilityNum = selection_index - 1
                 req.lockIds = []
                 req.permanentLockIds = permanent_lockIds_list
                 req.selectionAbilityMstId = mst_id
